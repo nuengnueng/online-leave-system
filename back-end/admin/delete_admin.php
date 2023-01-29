@@ -4,34 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Page Delete</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
-<?php (include '../menu/menu.php');?>
-    
-
 <?php
 include('../connection/connection.php');
 $connection->set_charset("utf8");
-if(isset($_POST) && !empty($_POST)){
-   // print_r($_POST);
-   $id = $_POST['id'];
-   $sql = "DELETE FROM tb_admin WHERE id = '$id'";
-   $query = mysqli_query($connection,$sql);
-   if($query){
-    header("Location:list_admin.php");
+   $ids = $_GET['id'];
+   $sql = "DELETE FROM personnel WHERE id = '$ids'";
+   if(mysqli_query($connection,$sql)){
+    echo "<script> alert('ลบข้อมูลเรียบร้อย');</script>";
+    echo "<script>window.location='list_admin.php';</script>";
    }else{
-    echo 'การลบพนักงานผิดพลาด';
+    echo "Error:" . $sql ."<br>" . mysql_error($connection);
+    echo "<script>alert('ไม่สามารถลบข้อมูลไม่ได้'); </script>";
+        
    }
- 
-}
- 
+   mysqli_close($connection);
+
 ?>
-<form action="" method="post">
-    <input type="hidden" name="id" value="<?=$_GET['id']?>"
-    <label>ยืนยันการลบพนักงาน</label>
-    <input type="submit" value="ยืนยัน">
-    <button><a href="list_admin.php">ยกเลิก</a></button>
-</form>
 </body>
 </html>
