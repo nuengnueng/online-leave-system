@@ -6,7 +6,7 @@ $connection->set_charset("utf8");
     $nametitle = $_POST['nametitle'];
     $username = $_POST['username'] ;
     $lastname = $_POST['lastname'] ;
-    $password = md5($_POST['password']);
+    $password = $_POST['password'];
     $phonenumber = $_POST['phonenumber'] ;
     $position = $_POST['position'];
     $affiliation = $_POST['affiliation'] ;
@@ -14,9 +14,11 @@ $connection->set_charset("utf8");
    
 
 $check = "
-SELECT Psn_id
+SELECT Psn_id, username, lastname
 FROM personnel
-WHERE Psn_id = '$Psn_id'
+WHERE Psn_id = '$Psn_id' 
+OR username = '$username'
+AND lastname = '$lastname'
 ";
 
 $result1 = mysqli_query($connection,$check) or die(mysqli_error());

@@ -3,7 +3,7 @@
    session_start();
    if(!isset($_SESSION["username"]))
    {
-    header("location:../Prime Minister/login.php");  
+    header("location:../login/login.php");  
    }
 ?>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
 <?php
         if(isset($_SESSION['username'])) {
             $PrimeMinister_id = $_SESSION['username'];
-            $stmt = $conn->query("SELECT * FROM primeminister WHERE id = $PrimeMinister_id");
+            $stmt = $conn->query("SELECT * FROM personnel WHERE id = $PrimeMinister_id");
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
@@ -35,52 +35,39 @@
 <table class="table table-striped  table-hover table-responsive table-bordered">
   <tr>
     <th>No.</th>
-    <th>รหัสประเภทการลา</th>
     <th>ชื่อประเภทการลา</th>
     <th>จำนวนวันที่ลาได้</th>
     <th>ใช้วันลา/วัน</th>
   </tr>
   <tr>
     <td>1</td>
-    <td>1111</td>
     <td>ลาป่วย</td>
     <td>30</td>
     <td>0</td>
   </tr>
   <tr>
     <td>2</td>
-    <td>2222</td>
     <td>ลากิจ</td>
     <td>7</td>
     <td>0</td>
   </tr>
   <tr>
     <td>3</td>
-    <td>3333</td>
     <td>ลาพักร้อน</td>
     <td>7</td>
     <td>0</td>
   </tr>
   <tr>
     <td>4</td>
-    <td>4444</td>
     <td>ลาคลอด</td>
     <td>90</td>
     <td>0</td>
   </tr>
   <tr>
     <td>5</td>
-    <td>5555</td>
     <td>ลาบวช</td>
     <td>90</td>
     <td>0</td>
-  </tr>
-  <tr>
-    <td>No.</td>
-    <td>รหัสประเภทการลา</td>
-    <td>ชื่อประเภทการลา</td>
-    <td>จำนวนวันที่ลาได้</td>
-    <td>ใช้วันลา/วัน</td>
   </tr>
 </table>
     </div>

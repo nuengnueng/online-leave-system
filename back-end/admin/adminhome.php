@@ -1,6 +1,10 @@
 <?php
     require_once'../connection/db.php';
    session_start();
+   if(!isset($_SESSION["username"]))
+   {
+    header("location:../login/login.php");  
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,74 +20,20 @@
 </head>
 <body>
 <div>
+<?php (include '../admin/menu.html ');?>
     <?php
         if(isset($_SESSION['username'])) {
             $admin_id = $_SESSION['username'];
-            $stmt = $conn->query("SELECT * FROM admin WHERE id = $admin_id");
+            $stmt = $conn->query("SELECT * FROM personnel WHERE id = $admin_id");
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
         ?>
-<?php (include '../admin/menu.html ');?>
-    <h1>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?></h1>
-   
-    
-<div class="container">
-            <div class="row">
-                <div class="col-md-12"> <br>
-                <span class="self-center text-xl text-gray-700 font-Sarabun whitespace-nowrap dark:text-white">รายการทั้งหมด</span>
-<table class="table table-striped  table-hover table-responsive table-bordered">
-  <tr>
-    <th>No.</th>
-    <th>รหัสประเภทการลา</th>
-    <th>ชื่อประเภทการลา</th>
-    <th>จำนวนวันที่ลาได้</th>
-    <th>ใช้วันลา/วัน</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>1111</td>
-    <td>ลาป่วย</td>
-    <td>30</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>2222</td>
-    <td>ลากิจ</td>
-    <td>7</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>3333</td>
-    <td>ลาพักร้อน</td>
-    <td>7</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>4444</td>
-    <td>ลาคลอด</td>
-    <td>90</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>5555</td>
-    <td>ลาบวช</td>
-    <td>90</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>No.</td>
-    <td>รหัสประเภทการลา</td>
-    <td>ชื่อประเภทการลา</td>
-    <td>จำนวนวันที่ลาได้</td>
-    <td>ใช้วันลา/วัน</td>
-  </tr>
-</table>
-    </div>
+
+    <h3>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?></h3>
+
+    <?php (include '../admin/adminhome1.php ');?>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </html>

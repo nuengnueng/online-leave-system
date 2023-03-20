@@ -1,3 +1,4 @@
+
 <?php include('../connection/connection.php');?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +12,13 @@
 </head>
 
 <?php (include '../inspector/menu.html');?>
-<a href="main.php">ย้อนกลับ</a>
+<a href="main.php" class="btn btn-success mb-3" >ย้อนกลับ </a>
 
 <head>
     <body>
-<h5>รายละเอียดลางาน</h5>
-<h5>พนักงานส่วนตำบล</h5>
+<div class="container">
+    <h5>รายละเอียดลางาน</h5>
+    <h5>พนักงานส่วนตำบล</h5>
 <option selected="">ประเภทการลา</option>
     <option>การลาป่วย</option>
         <tr>

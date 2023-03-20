@@ -3,7 +3,7 @@
    session_start();
    if(!isset($_SESSION["username"]))
    {
-    header("location:../Prime Minister/login.php");  
+    header("location:../login/login.php");  
    }
 ?>
 <!DOCTYPE html>
@@ -20,19 +20,7 @@
     <div class="container">
             <div class="row">
                 <div class="col-md-12"> <br>
-                <span class="self-center text-xl text-gray font-Sarabun whitespace-nowrap dark:text-white">จำนวนวันที่ลาไปแล้ว</span>
-<table class="table table-striped  table-hover table-responsive table-bordered">
-  <tr>
-    <th>No.</th>
-    <th>รหัสพนักงาน</th>
-    <th>ชื่อ</th>
-    <th>นามสกุล</th>
-    <th>ลาป่วย (วัน)</th>
-    <th>ลากิจ (วัน)</th>
-    <th>ลาพักร้อน (วัน)</th>
-    <th>ลาคลอด (วัน)</th>
-    <th>ลาบวช (วัน)</th>
-    <th>ไม่อนุมัติ</th>
-  </tr>
+                <span class="self-center text-xl text-gray font-Sarabun whitespace-nowrap dark:text-white">สถิติการลา</span>
+
 </body>
 </html>

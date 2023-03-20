@@ -1,9 +1,21 @@
+
 <?php
 include('../connection/connection.php');
-$sql = "SELECT*FROM leave_information";
+if(isset($_SESSION['username'])) {
+    $username_id = $_SESSION['username'];
+    $stmt = $conn->query("SELECT * FROM personnel WHERE id = $username_id");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $Psn_id = $row['Psn_id'];
+    
+$sql = "SELECT*,DATEDIFF(end , start) as sumdate FROM leave_information  WHERE Psn_id = '$Psn_id'
+ORDER BY Psn_id ASC" ;
 $query=mysqli_query($connection,$sql);
 $connection->set_charset("utf8");
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +26,7 @@ $connection->set_charset("utf8");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    
+
  
     <div class="container">
             <div class="row">
@@ -23,14 +35,18 @@ $connection->set_charset("utf8");
                     <table class="table table-striped  table-hover table-responsive table-bordered">
                         <thead>
                             <tr>
-                                <th>รหัสประเภทการลา</th>
+                                <th>รหัสพนักงาน</th>
+                                <th>คำนำหน้า</th>
+                                <th>ชื่อ</th>
+                                <th>นามสกุล</th>
                                 <th>ประเภทการลา</th>
                                 <th>รายละเอียดการขอลา</th>
+                                <th>เบอร์โทรศัพท์</th>
                                 <th>วันที่เริ่มลา</th>
                                 <th>วันที่สิ้นสุด</th>
-                                <th>วันที่่ทำการลา</th>
-                                <th>สถานะ</th>
+                                <th>จำนวนวันที่ลา</th>
                                 <th>แนบไฟล์</th>
+                                <th>สถานะ</th>
                                 <th>แก้ไขข้อมูลการลา</th>
                                 <th>ลบข้อมูลการลา</th>
                         
@@ -41,14 +57,45 @@ $connection->set_charset("utf8");
  
         <?php foreach($query as $data){?>
         <tr>
-           <td><?php echo $data['leave_id']?></td>
+        <?php echo "<td>" .$data["Psn_id"] .  "</td> ";?>
+           <td><?php echo $data['nametitle']?></td>
+           <td><?php echo $data['username']?></td>
+           <td><?php echo $data['lastname']?></td>
             <td><?php echo $data['leave_name']?></td>
             <td><?php echo $data['description']?></td>
-            <td><?php echo $data['start']?></td>
-            <td><?php echo $data['end']?></td>
-            <td><?php echo $data['postingDate']?></td>
-            <td><?php echo $data['status']?></td>
+            <td><?php echo $data['phonenumber']?></td>
+            <td><?php echo date('d/m/Y',strtotime($data["start"]))?></td>
+            <td><?php echo date('d/m/Y',strtotime($data["end"]))?></td>   
+            <?php echo "<td>";
+            $sm = $data["sumdate"];
+                echo '';
+                echo $sm;
+                echo ' วัน';
+                echo "</td>"; ?>   
+                
+
+
+<?php
+echo round(abs(strtotime("2016-11-22") - strtotime("2016-11-29"))/60/60/24);
+echo 'วัน';
+?>
+
+
+                
             <?php echo "<td>"."<img src='../img/".$data['img']."' width='100'>"."</td>";?>
+            <!-- <td><?php echo $data['status']?> </td> -->
+            <?php 
+                if($data['status']=='1'){ 
+                    echo "<td> รอดำเนินการ </td>";
+                }
+                if($data['status']=='2'){
+                    echo "<td> อนุญาต </td>";
+                }
+                if($data['status']=='3'){
+                    echo "<td> ไม่อนุญาต </td>";
+                }
+            
+            ?>
             <td><a href="form_edit.php?id=<?=$data['id']?>" class="btn btn-warning ">แก้ไข</a></td>
             <td><a href="form_delete.php?id=<?=$data['id']?>"class="btn btn-danger ">ลบ</a></td>  
  
@@ -57,6 +104,7 @@ $connection->set_charset("utf8");
         <?php } ?>
         </tbody>
     </table>
- 
+    
+
 </body>
 </html>

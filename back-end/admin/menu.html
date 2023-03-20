@@ -6,8 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.css"  rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.css"  rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@100;300&display=swap" rel="stylesheet">
+     <!-- Custom fonts for this template-->
+     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+     <link
+         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+         rel="stylesheet">
+ 
+     <!-- Custom styles for this template-->
+     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -19,11 +27,12 @@
         <span class="block text-sm text-gray-900 dark:text-white">ระบบลางานออนไลน์<br>องค์การบริหารส่วนตำบลสุขสวัสดิ์</span>
     </a>
     <div class="flex items-center md:order-2">
+      
         <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
           <span class="sr-only">Open user menu</span>
           <img class="w-8 h-8 rounded-full" src="image.png" alt="user photo">
+          
         </button>
-        <!-- Dropdown menu -->
         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">admin</span>
@@ -34,7 +43,10 @@
               <a href="../admin/proflie.php"class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">แก้ไขโปรไฟล์</a>
             </li>
             <li>
-              <a href="../admin/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">ออกจากระบบ</a>
+              <a href="../admin/proflie_password.php"class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">แก้ไขรหัสผ่าน</a>
+            </li>
+            <li>
+              <a href="../logout/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">ออกจากระบบ</a>
             </li>
           </ul>
         </div>
