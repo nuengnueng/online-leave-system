@@ -64,21 +64,14 @@ $connection->set_charset("utf8");
             <td><?php echo $data['leave_name']?></td>
             <td><?php echo $data['description']?></td>
             <td><?php echo $data['phonenumber']?></td>
-            <td><?php echo date('d/m/Y',strtotime($data["start"]))?></td>
-            <td><?php echo date('d/m/Y',strtotime($data["end"]))?></td>   
+            <td><?php echo date('d/m/Y ',strtotime($data["start"]))?></td>
+            <td><?php echo date('d/m/Y ',strtotime($data["end"]))?></td>   
             <?php echo "<td>";
-            $sm = $data["sumdate"];
+            $sm = $data["postingDate"];
                 echo '';
                 echo $sm;
                 echo ' วัน';
                 echo "</td>"; ?>   
-                
-
-
-<?php
-echo round(abs(strtotime("2016-11-22") - strtotime("2016-11-29"))/60/60/24);
-echo 'วัน';
-?>
 
 
                 
@@ -86,12 +79,15 @@ echo 'วัน';
             <!-- <td><?php echo $data['status']?> </td> -->
             <?php 
                 if($data['status']=='1'){ 
-                    echo "<td> รอดำเนินการ </td>";
+                    echo "<td> รอดำเนินการ 0/2 </td>";
                 }
                 if($data['status']=='2'){
-                    echo "<td> อนุญาต </td>";
+                    echo "<td> รอดำเนินการ 1/2 </td>";
                 }
                 if($data['status']=='3'){
+                    echo "<td> อนุญาต  </td>";
+                }
+                if($data['status']=='4'){
                     echo "<td> ไม่อนุญาต </td>";
                 }
             

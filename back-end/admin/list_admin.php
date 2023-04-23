@@ -39,8 +39,9 @@ $(document).ready(function() {
             <div class="row">
                 <div class="col-md-12"> <br>
                 <a class="navbar-brand">ข้อมูลผู้ใช้ระบบ</a>
-                    <a href="insert_admin.php" class="btn btn-primary">+เพิ่มพนักงาน</a> 
-                    <a href="leave_admin.php" class="btn btn-primary">+ประเภทการลา</a> 
+                    <a href="insert_admin.php" class="btn btn-primary">+เพิ่มพนักงาน</a><br><br>
+                    <a href="leave_admin.php" class="btn btn-primary">+ประเภทการลา พนักงานส่วนตำบล</a>
+                    <a href="leave_admin1.php" class="btn btn-primary">+ประเภทการลา พนักงานจ้าง</a> 
             </div>
                 </div>
     </div>

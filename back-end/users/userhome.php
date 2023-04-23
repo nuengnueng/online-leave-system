@@ -25,24 +25,36 @@ if (!isset($_SESSION["username"])) {
     <?php
     include('../connection/connection.php');
     if (isset($_SESSION['username'])) {
+
       $username_id = $_SESSION['username'];
       $stmt = $conn->query("SELECT * FROM personnel WHERE id = $username_id");
       $stmt->execute();
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
       $Psn_id = $row['Psn_id'];
-
-      $sql = "SELECT leave_type.id AS id ,leave_type.leave_name AS name,leave_type.leave_limit AS leavelimit , IFNULL(DATEDIFF(leave_information.end,leave_information.start),0)AS total
+     
+      if ($row["employees"] == 'พนักงานจ้าง') {
+        $sql = "SELECT leave_type1.id AS id ,leave_type1.leave_name AS name,leave_type1.leave_limit AS leavelimit , IFNULL(SUM(leave_information.postingDate),0)AS total
+FROM leave_type1 
+LEFT JOIN leave_information 
+ON leave_information.leave_name = leave_type1.leave_name AND leave_information.Psn_id = '$Psn_id'
+GROUP BY leave_type1.leave_name";
+        $query = mysqli_query($connection, $sql);
+        $connection->set_charset("utf8");
+        $index = '1';
+      } else {
+        $sql = "SELECT leave_type.id AS id ,leave_type.leave_name AS name,leave_type.leave_limit AS leavelimit , IFNULL(SUM(leave_information.postingDate),0)AS total
 FROM leave_type 
 LEFT JOIN leave_information 
 ON leave_information.leave_name = leave_type.leave_name AND leave_information.Psn_id = '$Psn_id'
 GROUP BY leave_type.leave_name";
-      $query = mysqli_query($connection, $sql);
-      $connection->set_charset("utf8");
-      $index = '1';
+        $query = mysqli_query($connection, $sql);
+        $connection->set_charset("utf8");
+        $index = '1';
+      }
     }
     ?>
     <?php (include '../users/menu.html'); ?>
-    <h1>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?></h1>
+    <h1>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?> <?php echo $row['lastname'] ?></h1>
 
   </div>
   <div class="container-fluid">
@@ -51,7 +63,7 @@ GROUP BY leave_type.leave_name";
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800"></h1>
       <!--การสร้างลิงค์ เรียกไฟล์ myReport.pdf แสดงผลไฟล์ PDF  -->
-      <a href="Report.pdf" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Report</a>
+      <a href="show_report1.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Report</a>
     </div>
     <div class="container">
       <div class="row">
@@ -74,14 +86,14 @@ GROUP BY leave_type.leave_name";
                 <td><?php echo $data['name'] ?></td>
                 <td><?php echo $data['leavelimit'] ?> </td>
                 <td><?php echo $data['total'] ?> </td>
-                <td><?php echo (intval($data['leavelimit']) - intval($data['total'])) ?> </td>
+                <td><?php echo (floatval($data['leavelimit']) - floatval($data['total'])) ?> </td>
               </tr>
             <?php } ?>
 
 
           </table>
           <?php (include '../users/form_list.php'); ?>
-        
+
 </body>
 
 </html>

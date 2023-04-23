@@ -18,6 +18,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $sql = "SELECT * FROM personnel WHERE username='".$username."' AND password='".$password."'
             ";
         $result = mysqli_query($connection,$sql);
+    
 
         $row = mysqli_fetch_array($result);
 

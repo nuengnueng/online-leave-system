@@ -30,7 +30,7 @@
         }
         ?>
 
-    <h3>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?></h3>
+    <h3>ยินดีต้อนรับคุณ, <?php echo $row['username'] ?> <?php echo $row['lastname'] ?></h3>
 
     <?php (include '../admin/adminhome1.php ');?>
 

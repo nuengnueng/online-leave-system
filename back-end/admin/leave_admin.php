@@ -27,7 +27,7 @@ $connection->set_charset("utf8");
         <div class="row">
             <div class="col-md-12"> <br>
                 
-                <a href="insert_admin.php" class="btn btn-primary">+เพิ่มประเภทการลา</a>
+                <a href="leave_insert.php" class="btn btn-primary">+เพิ่มประเภทการลา</a><br><br>
             </div>
         </div>
 
@@ -39,6 +39,7 @@ $connection->set_charset("utf8");
                     <th>ชื่อประเภทการลา</th>
                     <th>จำนวนวันที่ลาได้</th>
                     <th>แก้ไข</th>
+                    <th>ลบ</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +49,7 @@ $connection->set_charset("utf8");
                         <td><?php echo $data['leave_name'] ?></td>
                         <td><?php echo $data['leave_limit'] ?></td>
                         <td><a href="edit_leave.php?id=<?= $data['id'] ?>" class="btn btn-warning btn-sm">แก้ไข</a></td>
+                        <td><a href="leave_delete.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm">ลบ</a></td>
 
                     </tr>
                 <?php } ?>

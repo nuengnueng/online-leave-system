@@ -11,6 +11,38 @@
 <?php
 include('../connection/connection.php');
 $connection->set_charset("utf8");
+function getWorkingDays($startdate,$enddate){
+  $start = new DateTime($startdate);
+  $end = new DateTime($enddate);
+  // otherwise the  end date is excluded (bug?)
+  $end->modify('+1 day');
+  
+  $interval = $end->diff($start);
+  
+  // total days
+  $days = $interval->days;
+  
+  // create an iterateable period of date (P1D equates to 1 day)
+  $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+  
+  // best stored as array, so you can add more than one
+  $holidays = array('2023-04-13','2023-04-14','2023-04-17');
+  
+  foreach($period as $dt) {
+  
+  $curr = $dt->format('D');
+  
+      // substract if Saturday or Sunday
+      if ($curr == 'Sat' || $curr == 'Sun') {
+          $days--;
+      }
+      // (optional) for the updated question
+      elseif (in_array($dt->format('Y-m-d'), $holidays)) {
+          $days--;
+      }
+  }
+  return $days; // 
+  }
 if (isset($_POST) && !empty($_POST)) {
   if(isset($_SESSION['username'])) {
     $username_id = $_SESSION['username'];
@@ -30,9 +62,16 @@ if (isset($_POST) && !empty($_POST)) {
   $leave_name = $_POST['leave_name'];
   $description = $_POST['description'];
   $phonenumber = $_POST['phonenumber'];
-  $start = $_POST['start'];
+  echo("<script>console.log('PHP: " . $_POST['flexRadioDefault'] . "');</script>");
+  if($_POST['flexRadioDefault']=='halfday'){
+    $start = $_POST['start'];
+  $end = $_POST['start'];
+  $postingDate = '0.5';
+  }else{
+    $start = $_POST['start'];
   $end = $_POST['end'];
-
+  $postingDate = getWorkingDays($_POST['start'],$_POST['end']);
+  }
 
   $date1 = date("Ymd_His");
   $numrand = (mt_rand());
@@ -48,8 +87,8 @@ if (isset($_POST) && !empty($_POST)) {
     move_uploaded_file($_FILES['img']['tmp_name'], $path_copy);
   }
 
-  $sql = "INSERT INTO leave_information (Psn_id,nametitle,username,lastname,leave_name,description,phonenumber,start,end,img,status)
-            VALUES ('$Psn_id','$nametitle','$username','$lastname','$leave_name','$description','$phonenumber','$start','$end','$newname','1')";
+  $sql = "INSERT INTO leave_information (Psn_id,nametitle,username,lastname,leave_name,description,phonenumber,start,end,img,status,postingDate)
+            VALUES ('$Psn_id','$nametitle','$username','$lastname','$leave_name','$description','$phonenumber','$start','$end','$newname','1','$postingDate')";
   $query = mysqli_query($connection, $sql);
   if ($query) {
     echo "<script> alert('บันทึกข้อมูลเรียบร้อย');</script>";
@@ -84,6 +123,7 @@ if (isset($_POST) && !empty($_POST)) {
            
            
         }
+      
         ?>
 
   <?php (include '../users/menu.html'); ?>
@@ -131,9 +171,18 @@ if (isset($_POST) && !empty($_POST)) {
             class="formbold-form-input"
             />
         </div> -->
+        
           <div>
             <label for="leave_name" class="formbold-form-label">ชื่อประเภทการลา </label>
+            <?php if($row["employees"] == 'พนักงานจ้าง'){ ?>
             <select class="formbold-form-input" type="text" name="leave_name">
+              <option selected="">- เลือกชื่อประเภทการลา</option>
+              <option>ลาป่วย</option>
+              <option>ลาพักร้อน</option>
+              <option>ลาคลอด</option>
+            </select>
+            <?php }else{ ?>
+              <select class="formbold-form-input" type="text" name="leave_name">
               <option selected="">- เลือกชื่อประเภทการลา</option>
               <option>ลาป่วย</option>
               <option>ลากิจ</option>
@@ -141,8 +190,11 @@ if (isset($_POST) && !empty($_POST)) {
               <option>ลาพักร้อน</option>
               <option>ลาคลอด</option>
             </select>
+              <?php } ?>
           </div>
         </div>
+
+   
         <div class="formbold-mb-3">
           <label for="description" class="formbold-form-label">
             รายละเอียดการขอลา
@@ -157,15 +209,28 @@ if (isset($_POST) && !empty($_POST)) {
             <input type="text" name="phonenumber" id="phonenumber" placeholder="Phone number" class="formbold-form-input" />
           </div>
         </div>
-
+        <div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="fullday" value="fullday"onchange="checkdata(false)"checked>
+  <label class="form-check-label" for="flexRadioDefault1">
+    เต็มวัน
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="fullday" value="halfday"onchange="checkdata(true)" >
+  <label class="form-check-label" for="flexRadioDefault2">
+    ครึ่งวัน
+  </label>
+</div>
         <div class="formbold-mb-3">
           <label for="start" class="formbold-form-label"> วันที่เริ่มลา</label>
           <input type="date" name="start" id="start" class="formbold-form-input" />
         </div>
-        <div class="formbold-mb-3">
+        
+        <div class="formbold-mb-3"id= "end1">
           <label for="end" class="formbold-form-label">วันที่สิ้นสุด</label>
           <input type="date" name="end" id="end" class="formbold-form-input" />
         </div>
+        
         <div class="formbold-form-file-flex">
           <label for="img" class="formbold-form-label">
             แนบไฟล์
@@ -176,7 +241,16 @@ if (isset($_POST) && !empty($_POST)) {
 
 
       </form>
-
+<script>
+  function checkdata(val){
+    console.log(val)
+    if(val){
+      document.getElementById('end1').hidden=true
+    }else{
+      document.getElementById('end1').hidden=false
+    }
+  }
+</script>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 

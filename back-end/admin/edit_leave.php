@@ -10,26 +10,21 @@ if(isset($_POST) && !empty($_POST)){
     $id = $_POST['id'];
     $leave_name = $_POST['leave_name'];
     $leave_limit = $_POST['leave_limit'] ;
-    $sql_edit = "UPDATE leave_type SET id='$id',leave_name='$leave_name',leave_limit='$leave_limit',
+    $sql_edit = "UPDATE leave_type SET id ='$id',leave_name ='$leave_name',leave_limit='$leave_limit'
                                       WHERE id =
                                      '$id' ";
                                      $query_edit = mysqli_query($connection,$sql_edit);
                                      if($query_edit){
                                       echo "<script> alert('อัพเดตข้อมูลเรียบร้อย');</script>";
-                                      echo "<script>window.location='list_admin.php';</script>";
+                                      echo "<script>window.location='leave_admin.php';</script>";
                                   }else{
-                                      echo "Error:" . $sql . "<br>" . mysql_error($connection);
+                                      echo "Error:" . $sql . "<br>" .mysqli_error($connection);
                                       echo "<script> alert('อัพเดตข้อมูลไม่ได้'); </script>";
                                       
                                   }
                                   mysqli_close($connection);
 }
 ?>
-
-
-
-
-
 
 
 <!DOCTYPE html>
@@ -44,14 +39,14 @@ if(isset($_POST) && !empty($_POST)){
 <?php (include '../admin/menu.html');?>
 <div class="formbold-main-wrapper">
   <div class="formbold-form-wrapper">
-  <a href="list_admin.php" class="btn btn-success mb-3">ย้อนกลับ</a>
-  <div class="display-6 text-center justify-content-center ">แก้ไขข้อมูล</div><br>
-    <form action="insert_admin_db.php" method="POST">
+  <a href="leave_admin.php" class="btn btn-success mb-3">ย้อนกลับ</a>
+  <div class="display-6 text-center justify-content-center ">แก้ไขข้อมูล</div>
+    <form action="" method="POST">
       <div class="formbold-input-flex">
         <div>
           <label for="id" class="formbold-form-label"> No. </label>
           <input
-            type="text"
+            type="id"
             name="id"
             value="<?=$data['id']?>"
             id="id"
@@ -82,7 +77,7 @@ if(isset($_POST) && !empty($_POST)){
             class="formbold-form-input"
             />
         </div>
-      </div>
+      </div><br><br>
       <button class="formbold-btn">บันทึกข้อมูล</button>
     </form>
     <style>
@@ -105,6 +100,65 @@ if(isset($_POST) && !empty($_POST)){
     justify-content: center;
     padding: 48px;
   }
+  
+  .formbold-input-wrapp > div {
+    display: flex;
+    gap: 20px;
+  }
 
+  .formbold-input-flex {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+  .formbold-input-flex > div {
+    width: 50%;
+  }
+  .formbold-form-input {
+    width: 50%;
+    padding: 13px 22px;
+    border-radius: 5px;
+    border: 1px solid #dde3ec;
+    background: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    color: #536387;
+    outline: none;
+    resize: none;
+  }
+  .formbold-form-input:focus {
+    border-color: #6a64f1;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+  }
+  .formbold-form-label {
+    color: #07074D;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  
+  .formbold-btn {
+    text-align: center;
+    width: 10%;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 1px 2px;
+    border: none;
+    font-weight: 20;
+    background-color: #6a64f1;
+    color: white;
+    cursor: pointer;
+    margin-top: 45px;
+  }
+  .formbold-btn:hover {
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+  }
+  .formbold-w-45 {
+    width: 45%;
+  }
+  </style>
 </body>
 </html>
