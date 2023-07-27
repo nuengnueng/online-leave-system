@@ -24,14 +24,13 @@ IFNULL(SUM(leave_information.postingDate), 0) AS Leave_Use,
 leave_type.leave_limit - IFNULL(SUM(leave_information.postingDate), 0) AS Total
 FROM personnel
 INNER JOIN leave_information ON personnel.Psn_id = leave_information.Psn_id
-INNER JOIN leave_type ON leave_type.id = leave_information.id
+INNER JOIN leave_type ON leave_type.leave_name = leave_information.leave_name
 GROUP BY personnel.Psn_id, 
   personnel.username, 
   personnel.lastname, 
   personnel.employees, 
   leave_type.leave_name, 
   leave_type.leave_limit
-
 
 ";
 $query=mysqli_query($connection,$sql);

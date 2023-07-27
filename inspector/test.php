@@ -54,7 +54,7 @@ $connection->set_charset("utf8");
       <input type="date" name="to_date" value="<?php if(isset($_POST['to_date'])){ echo $_POST['to_date'];}?>">
     </div>
     <div class="col-sm-4">
-    <button type="submit" class="btn btn-secondary">ค้นหา</button>
+    <button style="background-color:#0d6efd; " type="submit" class="btn btn-secondary">ค้นหา</button>
   </div>
     </form>
    

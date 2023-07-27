@@ -174,7 +174,7 @@ if (isset($_POST) && !empty($_POST)) {
       <a href="userhome.php" class="btn btn-success mb-3">ย้อนกลับ</a>
       <div class="display-6 text-center justify-content-center ">แบบฟอร์มการลา</div><br>
       <form action="sendinfo.php" method="post" id="form" enctype="multipart/form-data">
-        <?php if (isset($_SESSION['success'])) { ?>
+        <?php if (isset($_SESSION['success'])) { ?> 
           <div class="alert alert-success" role="alert">
             <?php 
               echo $_SESSION['success'];

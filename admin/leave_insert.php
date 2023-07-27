@@ -10,8 +10,8 @@ if(isset($_POST) && !empty($_POST)){
     if(intval($leave_limit)< 1){
       echo "<script> alert('ไม่สามารถบันทึกข้อมูลได้');</script>";
     }else{
-      $sql = "INSERT INTO leave_type(id,leave_name,leave_limit)
-              VALUES ('$id','$leave_name','$leave_limit')";
+      $sql = "INSERT INTO leave_type(leave_name,leave_limit)
+              VALUES ('$leave_name','$leave_limit')";
       $query = mysqli_query($connection,$sql);
       if($query){
           echo "<script> alert('บันทึกข้อมูลเรียบร้อย');</script>";

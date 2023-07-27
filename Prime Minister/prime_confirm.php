@@ -17,7 +17,7 @@ $connection->set_charset("utf8");
    $sql = "update  leave_information set status='3' WHERE id = '$ids'";
    if(mysqli_query($connection,$sql)){
     echo "<script> alert('คุณต้องการยืนยันการอนุญาต');</script>";
-    echo "<script>window.location='prime list.php';</script>";
+    echo "<script>window.location='main.php';</script>";
    }else{
     echo "Error:" . $sql ."<br>" . mysqli_error($connection);
     echo "<script>alert('ไม่อนุญาต'); </script>";

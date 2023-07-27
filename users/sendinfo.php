@@ -20,9 +20,9 @@ function getDatesFromRange($start, $end, $format = 'Y-m-d') {
 }
 function checkday($leaveday,$start,$end)
 {
-  // $paymentDate = date('Y-m-d');
+  
   $paymentDate = date('Y-m-d', strtotime($leaveday));
-  //echo $paymentDate; // echos today! 
+  
   $contractDateBegin = date('Y-m-d', strtotime($start));
   $contractDateEnd = date('Y-m-d', strtotime($end));
 
@@ -38,33 +38,33 @@ function getWorkingDays($startdate, $enddate)
 {
   $start = new DateTime($startdate);
   $end = new DateTime($enddate);
-  // otherwise the  end date is excluded (bug?)
+ 
   $end->modify('+1 day');
 
   $interval = $end->diff($start);
 
-  // total days
+  
   $days = $interval->days;
 
-  // create an iterateable period of date (P1D equates to 1 day)
+ 
   $period = new DatePeriod($start, new DateInterval('P1D'), $end);
 
-  // best stored as array, so you can add more than one
+
   $holidays = array('2023-04-13', '2023-04-14', '2023-04-17');
 
   foreach ($period as $dt) {
 
     $curr = $dt->format('D');
 
-    // substract if Saturday or Sunday
+   
     if ($curr == 'Sat' || $curr == 'Sun') {
       $days--;
     }
-    // (optional) for the updated question
+   
     elseif (in_array($dt->format('Y-m-d'), $holidays)) {
       $days--;
     }
-  }
+  } 
   return $days; // 
 }
     if (isset($_POST) && !empty($_POST)) {

@@ -62,7 +62,7 @@ if(isset($_POST) && !empty($_POST)){
   <div class="formbold-form-wrapper">
   <a href="list_admin.php" class="btn btn-success mb-3">ย้อนกลับ</a>
   <div class="display-6 text-center justify-content-center ">แก้ไขข้อมูล</div><br>
-    <form action="" method="POST">
+    <form action="edit_admin_db.php" method="POST">
       <div class="formbold-input-flex">
         <div>
           <label for="Psn_id" class="formbold-form-label"> รหัสพนักงาน </label>
